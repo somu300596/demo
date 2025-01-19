@@ -1,6 +1,4 @@
-env:
-  - USE_GKE_GCLOUD_AUTH_PLUGIN=${_USE_GKE_GCLOUD_AUTH_PLUGIN}
-  
+
 steps:
   - id: get-kube-config
     dir: hello-cloudbuild-v2
@@ -10,6 +8,7 @@ steps:
       - CLOUDSDK_COMPUTE_REGION=${_REGION}
       - CLOUDSDK_CONTAINER_CLUSTER=${_CLOUDSDK_CONTAINER_CLUSTER}
       - KUBECONFIG=/workspace/.kube/config
+      - USE_GKE_GCLOUD_AUTH_PLUGIN=True
     args:
       - cluster-info
 
@@ -25,6 +24,7 @@ steps:
     name: cloudnatived/helm-cloudbuilder
     env:
       - KUBECONFIG=/workspace/.kube/config
+      - USE_GKE_GCLOUD_AUTH_PLUGIN=True
     args:
       - helm
       - upgrade
