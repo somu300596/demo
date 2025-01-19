@@ -21,24 +21,20 @@ steps:
 
   - id: deploy
     dir: hello-cloudbuild-v2
-    name: cloudnatived/helm-cloudbuilder
+    name: google/cloud-sdk:latest
     env:
       - KUBECONFIG=/workspace/.kube/config
       - USE_GKE_GCLOUD_AUTH_PLUGIN=True
+    entrypoint: bash
     args:
-      - helm
-      - upgrade
-      - --install
-      - --create-namespace
-      - ${TAG_NAME}-demo
-      - --namespace=${TAG_NAME}-demo
-      - --values
-      - k8s/demo/${TAG_NAME}-values.yaml
-      - --set
-      - container.image=${_REGION}-docker.pkg.dev/$PROJECT_ID/demo/demo
-      - --set
-      - container.tag=${COMMIT_SHA}
-      - ./k8s/demo
+    - -c
+    - |
+      helm upgrade --install --create-namespace ${TAG_NAME}-demo \
+        --namespace=${TAG_NAME}-demo \
+        --values k8s/demo/${TAG_NAME}-values.yaml \
+        --set container.image=${_REGION}-docker.pkg.dev/$PROJECT_ID/demo/demo \
+        --set container.tag=${COMMIT_SHA} \
+        ./k8s/demo
 
 options:
   logging: CLOUD_LOGGING_ONLY
