@@ -1,3 +1,6 @@
+env:
+  - USE_GKE_GCLOUD_AUTH_PLUGIN=${_USE_GKE_GCLOUD_AUTH_PLUGIN}
+  
 steps:
   - id: get-kube-config
     dir: hello-cloudbuild-v2
