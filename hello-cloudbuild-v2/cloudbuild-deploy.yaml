@@ -10,6 +10,13 @@ steps:
     args:
       - cluster-info
 
+  - id: install-plugin
+    name: gcr.io/cloud-builders/gcloud
+    args:
+    - components
+    - install
+    - gke-gcloud-auth-plugin
+
   - id: deploy
     dir: hello-cloudbuild-v2
     name: cloudnatived/helm-cloudbuilder
