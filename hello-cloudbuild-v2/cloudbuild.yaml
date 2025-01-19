@@ -22,7 +22,6 @@ steps:
     dir: hello-cloudbuild-v2
     name: gcr.io/cloud-builders/docker
     args:
-      - docker
       - image
       - build
       - --tag
